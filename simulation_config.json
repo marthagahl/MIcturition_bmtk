@@ -1,0 +1,46 @@
+{
+  "manifest": {
+    "$BASE_DIR": ".",
+    "$OUTPUT_DIR": "$BASE_DIR/output",
+    "$INPUT_DIR": "$BASE_DIR/input"
+  }, 
+  "target_simulator": "NEURON", 
+  "run": {
+    "nsteps_block": 5000, 
+    "tstop": 1000.0, 
+    "dt": 0.1, 
+    "dL": 9999, 
+    "spike_threshold": -40.0
+  }, 
+  "conditions": {
+    "celsius": 34.0, 
+    "v_init": -80.0
+  }, 
+  "inputs": {
+	"exc_spikes":{
+		"input_type":"spikes","module":"csv", "input_file":"$INPUT_DIR/spikes_15.csv", "node_set":"inp_nodes"
+	}
+}, 
+  "output": {
+    "spikes_file_csv": "spikes.csv", 
+    "spikes_file": "spikes.h5", 
+    "log_file": "log.txt", 
+    "output_dir": "${OUTPUT_DIR}", 
+    "overwrite_output_dir": true
+  }, 
+  "reports": {
+  "membrane_report": {
+	  "module": "membrane_report",
+	  "cells": "all", 
+	  "variable_name": ["cai", "v"],
+	  "file_name": "cell_vars.h5",
+	  "sections": "soma"
+  }
+  },
+ "node_sets":{
+	"inp_nodes":{
+		"model_type": "virtual"
+	}
+ },	
+  "network": "./circuit_config.json"
+}
