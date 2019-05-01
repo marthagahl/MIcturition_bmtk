@@ -1,10 +1,16 @@
 {
   "inputs": {
-    "exc_spikes": {
+    "blad_spikes": {
       "input_type": "spikes", 
-      "node_set": "inp_nodes", 
+      "node_set": "Blad_aff", 
       "module": "csv", 
       "input_file": "./input/spikes_15.csv"
+    }, 
+    "EUS_spikes": {
+      "input_type": "spikes", 
+      "node_set": "EUS_aff", 
+      "module": "csv", 
+      "input_file": "./input/spikes_5.csv"
     }
   }, 
   "run": {
@@ -61,8 +67,12 @@
         "nodes_file": "./network//hco_net_nodes.h5"
       }, 
       {
-        "node_types_file": "./network//inputPUD_node_types.csv", 
-        "nodes_file": "./network//inputPUD_nodes.h5"
+        "node_types_file": "./network//Blad_aff_node_types.csv", 
+        "nodes_file": "./network//Blad_aff_nodes.h5"
+      }, 
+      {
+        "node_types_file": "./network//EUS_aff_node_types.csv", 
+        "nodes_file": "./network//EUS_aff_nodes.h5"
       }
     ], 
     "edges": [
@@ -71,8 +81,12 @@
         "edge_types_file": "./network//hco_net_hco_net_edge_types.csv"
       }, 
       {
-        "edges_file": "./network//inputPUD_hco_net_edges.h5", 
-        "edge_types_file": "./network//inputPUD_hco_net_edge_types.csv"
+        "edges_file": "./network//Blad_aff_hco_net_edges.h5", 
+        "edge_types_file": "./network//Blad_aff_hco_net_edge_types.csv"
+      }, 
+      {
+        "edges_file": "./network//EUS_aff_hco_net_edges.h5", 
+        "edge_types_file": "./network//EUS_aff_hco_net_edge_types.csv"
       }
     ]
   }

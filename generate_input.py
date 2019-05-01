@@ -1,8 +1,9 @@
 import os
+import numpy as np
 
-def generate_input(filename,input_dir,hz,start,duration,cells):
+def generate_input(filename,input_dir,hz,start,duration,cells,noise):
     
-    step = int(1000/hz)
+    step = int((1000/hz) + np.random.uniform(0,2))
     
     stims = {}
     
@@ -23,10 +24,11 @@ if __name__ == '__main__':
     #Change these for your needs
     start = 0 #ms
     duration = 1000 #ms
-    hz = 15
+    hz = 5
     output_file = 'spikes_5.csv'
     input_dir = 'input'
     
     cells = [0,1]
+    noise = 1
     
-    generate_input(output_file,input_dir, hz, start, duration, cells)
+    generate_input(output_file,input_dir, hz, start, duration, cells, noise)

@@ -4,7 +4,8 @@ from bmtk.builder.networks import NetworkBuilder
 from bmtk.builder.auxi.node_params import positions_columinar, xiter_random
 
 net = NetworkBuilder('hco_net')
-inputPUD = NetworkBuilder('inputPUD')
+Blad_afferent = NetworkBuilder('Blad_aff')
+EUS_afferent = NetworkBuilder('EUS_aff')
 
 num_cells = 12
 cell_prefix = "PUD_"
@@ -139,26 +140,43 @@ def target_ind_equals_source_ind(source, targets, offset=0, min_syn=1, max_syn=1
     syns[target_index-offset]=1
     return syns
 
-inputPUD.add_nodes(N=1, model_type='virtual', pop_name='inp')
-inputPUD.add_nodes(N=1, model_type='virtual', pop_name='inp')
+# Connect virtual cells to EUS and Bladder
 
-conn=inputPUD.add_edges(target=net.nodes(model_template='hoc:PUD'),
-        source = {'pop_name': 'inp'},
-        iterator = 'one_to_all',
-        connection_rule = target_ind_equals_source_ind,
-        connection_params = {},
-        dynamics_params = "AMPA_ExcToExc.json",
-        model_template = "Exp2Syn",
-        delay = 0,
-        syn_weight = 1,
-        target_sections=["soma"],
-        distance_range=[0.0, 999.0])
+Blad_afferent.add_nodes(N=1, model_type='virtual', pop_name='inp_eus', potential='exc')
+EUS_afferent.add_nodes(N=1, model_type='virtual', pop_name='inp_blad', potential='exc')
+
+EUS_afferent.add_edges(source = EUS_afferent.nodes(),
+         target = net.nodes(cell_name='PUD_1'),
+         connection_params = {},
+         dynamics_params = "AMPA_ExcToExc.json",
+         model_template = "Exp2Syn",
+         delay = 0,
+         syn_weight = 1,
+         target_sections=["soma"],
+         distance_range=[0.0, 999.0])
+
+
+Blad_afferent.add_edges(source = Blad_afferent.nodes(),
+         target = net.nodes(cell_name='PUD_0'),
+         connection_params = {},
+         dynamics_params = "AMPA_ExcToExc.json",
+         model_template = "Exp2Syn",
+         delay = 0,
+         syn_weight = 1,
+         target_sections=["soma"],
+         distance_range=[0.0, 999.0])
 
 print("\nBuilding network and saving to directory \"" + output_dir + "\"")
 net.build()
-inputPUD.build()
+Blad_afferent.build()
+EUS_afferent.build()
+
 net.save_nodes(output_dir=output_dir)
 net.save_edges(output_dir=output_dir)
-inputPUD.save_nodes(output_dir=output_dir)
-inputPUD.save_edges(output_dir=output_dir)
+
+Blad_afferent.save_nodes(output_dir=output_dir)
+Blad_afferent.save_edges(output_dir=output_dir)
+
+EUS_afferent.save_nodes(output_dir=output_dir)
+EUS_afferent.save_edges(output_dir=output_dir)
 print("Done")
