@@ -1,77 +1,77 @@
 {
-  "target_simulator": "NEURON",
-  "run": {
-    "nsteps_block": 5000,
-    "tstop": 1000.0,
-    "dt": 0.1,
-    "dL": 9999,
-    "spike_threshold": -40.0
-  },
-  "conditions": {
-    "celsius": 34.0,
-    "v_init": -80.0
-  },
   "inputs": {
     "exc_spikes": {
-      "input_type": "spikes",
-      "module": "csv",
-      "input_file": "./input/spikes_15.csv",
-      "node_set": "inp_nodes"
+      "input_type": "spikes", 
+      "node_set": "inp_nodes", 
+      "module": "csv", 
+      "input_file": "./input/spikes_15.csv"
     }
-  },
-  "output": {
-    "spikes_file_csv": "spikes.csv",
-    "spikes_file": "spikes.h5",
-    "log_file": "log.txt",
-    "output_dir": "./output",
-    "overwrite_output_dir": true
-  },
+  }, 
+  "run": {
+    "nsteps_block": 5000, 
+    "dt": 0.1, 
+    "tstop": 1000.0, 
+    "dL": 9999, 
+    "spike_threshold": -40.0
+  }, 
+  "network": "./circuit_config.json", 
+  "config_path": "/home/ben/MIcturition_bmtk/simulation_config.json", 
+  "conditions": {
+    "celsius": 34.0, 
+    "v_init": -80.0
+  }, 
   "reports": {
     "membrane_report": {
-      "module": "membrane_report",
-      "cells": "all",
+      "file_name": "cell_vars.h5", 
+      "cells": "all", 
+      "sections": "soma", 
+      "module": "membrane_report", 
       "variable_name": [
-        "cai",
+        "cai", 
         "v"
-      ],
-      "file_name": "cell_vars.h5",
-      "sections": "soma"
+      ]
     }
-  },
+  }, 
   "node_sets": {
     "inp_nodes": {
       "model_type": "virtual"
     }
-  },
-  "network": "./circuit_config.json",
-  "config_path": "/home/mizzou/Desktop/bmtk_model/simulation_config.json",
-  "config_dir": "/home/mizzou/Desktop/bmtk_model",
+  }, 
   "components": {
-    "point_neuron_models_dir": "./biophys_components/point_neuron_templates",
-    "biophysical_neuron_models_dir": "./biophys_components/biophysical_neuron_templates",
-    "mechanisms_dir": "./biophys_components/mechanisms",
-    "morphologies_dir": "./biophys_components/morphologies",
-    "synaptic_models_dir": "./biophys_components/synaptic_models",
-    "templates_dir": "./biophys_components/hoc_templates"
-  },
+    "morphologies_dir": "./biophys_components/morphologies", 
+    "point_neuron_models_dir": "./biophys_components/point_neuron_templates", 
+    "templates_dir": "./biophys_components/hoc_templates", 
+    "biophysical_neuron_models_dir": "./biophys_components/biophysical_neuron_templates", 
+    "mechanisms_dir": "./biophys_components/mechanisms", 
+    "synaptic_models_dir": "./biophys_components/synaptic_models"
+  }, 
+  "output": {
+    "spikes_file_csv": "spikes.csv", 
+    "spikes_file": "spikes.h5", 
+    "log_file": "log.txt", 
+    "output_dir": "./output", 
+    "overwrite_output_dir": true
+  }, 
+  "target_simulator": "NEURON", 
+  "config_dir": "/home/ben/MIcturition_bmtk", 
   "networks": {
     "nodes": [
       {
-        "nodes_file": "./network//hco_net_nodes.h5",
-        "node_types_file": "./network//hco_net_node_types.csv"
-      },
+        "node_types_file": "./network//hco_net_node_types.csv", 
+        "nodes_file": "./network//hco_net_nodes.h5"
+      }, 
       {
-        "nodes_file": "./network//inputPUD_nodes.h5",
-        "node_types_file": "./network//inputPUD_node_types.csv"
+        "node_types_file": "./network//inputPUD_node_types.csv", 
+        "nodes_file": "./network//inputPUD_nodes.h5"
       }
-    ],
+    ], 
     "edges": [
       {
-        "edges_file": "./network//hco_net_hco_net_edges.h5",
+        "edges_file": "./network//hco_net_hco_net_edges.h5", 
         "edge_types_file": "./network//hco_net_hco_net_edge_types.csv"
-      },
+      }, 
       {
-        "edges_file": "./network//inputPUD_hco_net_edges.h5",
+        "edges_file": "./network//inputPUD_hco_net_edges.h5", 
         "edge_types_file": "./network//inputPUD_hco_net_edge_types.csv"
       }
     ]

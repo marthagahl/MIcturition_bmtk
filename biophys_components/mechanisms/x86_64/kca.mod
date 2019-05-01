@@ -1,1 +1,1 @@
-../modfiles//kca.mod
+../kca.mod

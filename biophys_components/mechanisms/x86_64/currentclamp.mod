@@ -1,1 +1,1 @@
-../modfiles//currentclamp.mod
+../currentclamp.mod

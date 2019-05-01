@@ -1,1 +1,1 @@
-../modfiles//netstimNEWh.mod
+../netstimNEWh.mod
