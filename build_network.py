@@ -108,8 +108,8 @@ print("\nCreating Cells")
 for i in range(num_cells):
     print("Building cell " + cell_prefix+str(i))
     template = 'hoc:PUD'
-#    if i == 4:
-#            template = 'hoc:PUD2'
+    if i == 4:
+            template = 'hoc:PUD2'
     net.add_nodes(N = 1, cell_name=cell_prefix+str(i), model_type='biophysical', model_template=template, morphology='blank.swc')
 
 # For each of the connections create a mapping
