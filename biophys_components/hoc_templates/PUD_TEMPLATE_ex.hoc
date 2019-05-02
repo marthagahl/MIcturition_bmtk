@@ -43,7 +43,7 @@ begintemplate PUD2
 		insert cadyn 
 		gcabar_cadyn = 2.35e-3 
 		eca = 120
-		insert leak el_leak= -84 glbar_leak = 12e-5 Ra=RaAll cm=1.8 
+		insert leak el_leak= -84 glbar_leak = 12e-5 Ra=RaAll cm=2.0 
 		insert hd ghdbar_hd=8e-4  78.72884325
 		insert na3 sh_na3=nash ar_na3=1	gbar_na3 = 0.12
 		insert nap gbar_nap=  0.000262//0.000142

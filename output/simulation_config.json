@@ -10,7 +10,7 @@
       "input_type": "spikes", 
       "node_set": "EUS_aff", 
       "module": "csv", 
-      "input_file": "./input/spikes_15.csv"
+      "input_file": "./input/spikes_20.csv"
     }
   }, 
   "run": {
@@ -18,7 +18,7 @@
     "dt": 0.1, 
     "tstop": 1000.0, 
     "dL": 9999, 
-    "spike_threshold": -40.0
+    "spike_threshold": 0.0
   }, 
   "network": "./circuit_config.json", 
   "config_path": "/home/ben/MIcturition_bmtk/simulation_config.json", 

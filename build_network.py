@@ -44,12 +44,12 @@ connection_mappings = [
     {"source":1,
      "target":3,
      "excitatory":True,
-     "weight":5.0e-03
+     "weight":10.0e-03
     },
     {"source":1,
      "target":4,
      "excitatory":True,
-     "weight":5.0e-03
+     "weight":14.0e-03
     },
     {"source":1,
      "target":5,
@@ -74,7 +74,7 @@ connection_mappings = [
     {"source":3,
      "target":4,
      "excitatory":False,
-     "weight":5.0e-03
+     "weight":2.0e-03
     },
     {"source":3,
      "target":6,
@@ -135,7 +135,11 @@ for i in range(num_cells):
     template = 'hoc:PUD'
     if i == 4:
             template = 'hoc:PUD2'
-    net.add_nodes(N = 1, cell_name=cell_prefix+str(i), model_type='biophysical', model_template=template, morphology='blank.swc')
+    if i != 1:
+        net.add_nodes(N = 1, cell_name=cell_prefix+str(i), model_type='biophysical', model_template=template, morphology='blank.swc')
+    else: 
+        net.add_nodes(N = 5, cell_name=cell_prefix+str(i), model_type='biophysical', model_template=template, morphology='blank.swc')
+
 
 # For each of the connections create a mapping
 print("\nConnecting Cells")
@@ -152,6 +156,7 @@ for conn in connection_mappings:
                     model_template='Exp2Syn',
                     dynamics_params=dynamic,
                     delay=0.0,
+                    threshold = 0,
                     target_sections=["soma"],
                     distance_range=[0.0, 999.0])
 
@@ -175,6 +180,7 @@ EUS_afferent.add_edges(source = EUS_afferent.nodes(),
          dynamics_params = "AMPA_ExcToExc.json",
          model_template = "Exp2Syn",
          delay = 0,
+         threshold = 0,
          syn_weight = 1,
          target_sections=["soma"],
          distance_range=[0.0, 999.0])
@@ -186,6 +192,7 @@ Blad_afferent.add_edges(source = Blad_afferent.nodes(),
          dynamics_params = "AMPA_ExcToExc.json",
          model_template = "Exp2Syn",
          delay = 0,
+         threshold = 0,
          syn_weight = 1,
          target_sections=["soma"],
          distance_range=[0.0, 999.0])

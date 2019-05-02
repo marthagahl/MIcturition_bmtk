@@ -37,7 +37,36 @@ plt.plot(time_steps,var_report.data(gid=8,var_name='v'))
 plt.ylim(-80,40)
 plt.ylabel(lab[1])
 
+# Plot "filter" cells + INd
+plt.figure()
+lab = ['low pass','high pass','INd']
+plt.subplot(3,1,1)
+plt.plot(time_steps,var_report.data(gid=3,var_name='v'))
+plt.ylim(-80,40)
+plt.ylabel(lab[0])
 
+plt.subplot(3,1,2)
+plt.plot(time_steps,var_report.data(gid=4,var_name='v'))
+plt.ylim(-80,40)
+plt.ylabel(lab[1])
+
+plt.subplot(3,1,3)
+plt.plot(time_steps,var_report.data(gid=5,var_name='v'))
+plt.ylim(-80,40)
+plt.ylabel(lab[2])
+
+# Plot the rest
+plt.figure()
+lab = ['PGN','FB','Hypo','IMG','MPG']
+gids = [6,7,9,10,11]
+for i in np.arange(0,len(lab)-1):
+    plt.subplot(4,1,i+1)
+    plt.plot(time_steps,var_report.data(gid=gids[i],var_name='v'))
+    plt.ylim(-80,40)
+    plt.ylabel(lab[i])
+
+
+# Plot spike raster
 df = pd.read_csv("output/spikes.csv",delimiter=' ')
 rast = df.values
 plt.figure()
