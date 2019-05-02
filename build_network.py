@@ -3,14 +3,15 @@ import numpy as np
 from bmtk.builder.networks import NetworkBuilder
 from bmtk.builder.auxi.node_params import positions_columinar, xiter_random
 
+# Build the networks
 net = NetworkBuilder('hco_net')
-Blad_afferent = NetworkBuilder('Blad_aff')
-EUS_afferent = NetworkBuilder('EUS_aff')
+Blad_afferent = NetworkBuilder('Blad_aff') # Virtual cells delivering input to Bladder
+EUS_afferent = NetworkBuilder('EUS_aff') # Virtual cells delivering input to EUS
+
 
 num_cells = 13
 cell_prefix = "PUD_"
 output_dir='network'
-
 
 # IDs
 # 0 - Bladder afferent
@@ -134,11 +135,9 @@ for i in range(num_cells):
     print("Building cell " + cell_prefix+str(i))
     template = 'hoc:PUD'
     if i == 4:
-            template = 'hoc:PUD2'
-    if i != 1:
-        net.add_nodes(N = 1, cell_name=cell_prefix+str(i), model_type='biophysical', model_template=template, morphology='blank.swc')
-    else: 
-        net.add_nodes(N = 5, cell_name=cell_prefix+str(i), model_type='biophysical', model_template=template, morphology='blank.swc')
+        template = 'hoc:PUD2'
+    
+    net.add_nodes(N = 1, cell_name=cell_prefix+str(i), model_type='biophysical', model_template=template, morphology='blank.swc')
 
 
 # For each of the connections create a mapping
@@ -171,8 +170,8 @@ def target_ind_equals_source_ind(source, targets, offset=0, min_syn=1, max_syn=1
 
 # Connect virtual cells to EUS and Bladder
 
-Blad_afferent.add_nodes(N=1, model_type='virtual', pop_name='inp_eus', potential='exc')
-EUS_afferent.add_nodes(N=1, model_type='virtual', pop_name='inp_blad', potential='exc')
+Blad_afferent.add_nodes(N=1, model_type='virtual', potential='exc')
+EUS_afferent.add_nodes(N=1, model_type='virtual', potential='exc')
 
 EUS_afferent.add_edges(source = EUS_afferent.nodes(),
          target = net.nodes(cell_name='PUD_1'),
@@ -181,7 +180,7 @@ EUS_afferent.add_edges(source = EUS_afferent.nodes(),
          model_template = "Exp2Syn",
          delay = 0,
          threshold = 0,
-         syn_weight = 1,
+         syn_weight = 10e-3,
          target_sections=["soma"],
          distance_range=[0.0, 999.0])
 
@@ -193,7 +192,7 @@ Blad_afferent.add_edges(source = Blad_afferent.nodes(),
          model_template = "Exp2Syn",
          delay = 0,
          threshold = 0,
-         syn_weight = 1,
+         syn_weight = 10e-3,
          target_sections=["soma"],
          distance_range=[0.0, 999.0])
 

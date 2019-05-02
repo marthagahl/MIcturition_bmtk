@@ -28,11 +28,11 @@ if __name__ == '__main__':
     #Change these for your needs
     start = 0 #ms
     duration = 1000 #ms
-    hz = 20
+    hz = 30
     output_file = 'spikes_{}.csv'.format(hz)
     input_dir = 'input'
     
-    cells = [0,1,2,3,4]
+    cells = [0]
     noise = 1
     
     generate_input(output_file,input_dir, hz, start, duration, cells, noise)

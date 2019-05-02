@@ -26,6 +26,7 @@
 		    "nodes_file": "$NETWORK_DIR//EUS_aff_nodes.h5",
 		    "node_types_file": "$NETWORK_DIR//EUS_aff_node_types.csv"
 	    }
+
     ], 
     "edges": [
 	    {
