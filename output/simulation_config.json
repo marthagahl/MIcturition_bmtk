@@ -4,13 +4,13 @@
       "input_type": "spikes", 
       "node_set": "Blad_aff", 
       "module": "csv", 
-      "input_file": "./input/spikes_15.csv"
+      "input_file": "./input/spikes_5.csv"
     }, 
     "EUS_spikes": {
       "input_type": "spikes", 
       "node_set": "EUS_aff", 
       "module": "csv", 
-      "input_file": "./input/spikes_5.csv"
+      "input_file": "./input/spikes_15.csv"
     }
   }, 
   "run": {
@@ -33,7 +33,6 @@
       "sections": "soma", 
       "module": "membrane_report", 
       "variable_name": [
-        "cai", 
         "v"
       ]
     }

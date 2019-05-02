@@ -20,14 +20,14 @@
 	"blad_spikes":{
 		"input_type":"spikes",
 		"module":"csv",
-		"input_file":"$INPUT_DIR/spikes_15.csv",
+		"input_file":"$INPUT_DIR/spikes_5.csv",
 		"node_set":"Blad_aff"
 	},
 
 	"EUS_spikes":{
 		"input_type":"spikes",
 		"module":"csv",
-		"input_file":"$INPUT_DIR/spikes_5.csv",
+		"input_file":"$INPUT_DIR/spikes_15.csv",
 		"node_set":"EUS_aff"
 	}
   },
@@ -42,7 +42,7 @@
   "membrane_report": {
 	  "module": "membrane_report",
 	  "cells": "all", 
-	  "variable_name": ["cai", "v"],
+	  "variable_name": ["v"],
 	  "file_name": "cell_vars.h5",
 	  "sections": "soma"
   }

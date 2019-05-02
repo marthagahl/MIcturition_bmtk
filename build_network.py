@@ -7,10 +7,24 @@ net = NetworkBuilder('hco_net')
 Blad_afferent = NetworkBuilder('Blad_aff')
 EUS_afferent = NetworkBuilder('EUS_aff')
 
-num_cells = 12
+num_cells = 13
 cell_prefix = "PUD_"
 output_dir='network'
 
+
+# IDs
+# 0 - Bladder afferent
+# 1 - EUS afferent
+# 2 - PAG/PMC
+# 3 - INm+
+# 4 - INm-
+# 5 - INd
+# 6 - PGN
+# 7 - FB
+# 8 - EUS MN
+# 9 - Hypo
+# 10 - IMG
+# 11 - MPG
 connection_mappings = [
     {"source":0,
      "target":2,
@@ -25,7 +39,7 @@ connection_mappings = [
     {"source":0,
      "target":9,
      "excitatory":True,
-     "weight":5.0e-03
+     "weight":8.0e-03
     },
     {"source":1,
      "target":3,
@@ -45,7 +59,7 @@ connection_mappings = [
     {"source":1,
      "target":8,
      "excitatory":True,
-     "weight":5.0e-03
+     "weight":10.0e-03
     },
     {"source":2,
      "target":5,
@@ -99,6 +113,16 @@ connection_mappings = [
     },
     {"source":9,
      "target":10,
+     "excitatory":True,
+     "weight":5.0e-03
+    },
+    {"source":10,
+     "target":12,
+     "excitatory":False,
+     "weight":5.0e-03
+    },
+    {"source":11,
+     "target":12,
      "excitatory":True,
      "weight":5.0e-03
     }

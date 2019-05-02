@@ -3,12 +3,16 @@ import numpy as np
 
 def generate_input(filename,input_dir,hz,start,duration,cells,noise):
     
-    step = int((1000/hz) + np.random.uniform(0,2))
-    
+    step = int(1000/hz)
+   
+    intvl = np.random.poisson(step,size=1000)
+
     stims = {}
     
     for cell in cells:
-        for spike_time in range(start,start+duration,step):
+        spike_time = start
+        for i in np.arange(start,start+duration,step):
+            spike_time = spike_time + intvl[i]
             if not stims.get(cell):
                 stims[cell] = []
             stims[cell].append(spike_time)
@@ -24,8 +28,8 @@ if __name__ == '__main__':
     #Change these for your needs
     start = 0 #ms
     duration = 1000 #ms
-    hz = 5
-    output_file = 'spikes_5.csv'
+    hz = 25
+    output_file = 'spikes_{}.csv'.format(hz)
     input_dir = 'input'
     
     cells = [0,1]
