@@ -59,8 +59,8 @@ plt.ylabel(lab[2])
 plt.figure()
 lab = ['PGN','FB','Hypo','IMG','MPG']
 gids = [6,7,9,10,11]
-for i in np.arange(0,len(lab)-1):
-    plt.subplot(4,1,i+1)
+for i in np.arange(0,len(lab)):
+    plt.subplot(5,1,i+1)
     plt.plot(time_steps,var_report.data(gid=gids[i],var_name='v'))
     plt.ylim(-80,40)
     plt.ylabel(lab[i])

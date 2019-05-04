@@ -27,7 +27,7 @@
 	"EUS_spikes":{
 		"input_type":"spikes",
 		"module":"csv",
-		"input_file":"$INPUT_DIR/spikes_20.csv",
+		"input_file":"$INPUT_DIR/spikes_30.csv",
 		"node_set":"EUS_aff"
 	}
   },

@@ -30,22 +30,22 @@ connection_mappings = [
     {"source":0,
      "target":2,
      "excitatory":True,
-     "weight":5.0e-03
+     "weight":14.0e-03
     },
     {"source":0,
      "target":5,
      "excitatory":True,
-     "weight":5.0e-03
+     "weight":14.0e-03
     },
     {"source":0,
      "target":9,
      "excitatory":True,
-     "weight":8.0e-03
+     "weight":14.0e-03
     },
     {"source":1,
      "target":3,
      "excitatory":True,
-     "weight":10.0e-03
+     "weight":10.0e-06
     },
     {"source":1,
      "target":4,
@@ -55,12 +55,12 @@ connection_mappings = [
     {"source":1,
      "target":5,
      "excitatory":True,
-     "weight":5.0e-03
+     "weight":14.0e-03
     },
     {"source":1,
      "target":8,
      "excitatory":True,
-     "weight":10.0e-03
+     "weight":14.0e-03
     },
     {"source":2,
      "target":5,
@@ -75,7 +75,7 @@ connection_mappings = [
     {"source":3,
      "target":4,
      "excitatory":False,
-     "weight":2.0e-03
+     "weight":2.0e-09
     },
     {"source":3,
      "target":6,
@@ -85,27 +85,27 @@ connection_mappings = [
     {"source":4,
      "target":3,
      "excitatory":False,
-     "weight":5.0e-03
+     "weight":5.0e-09
     },
     {"source":4,
      "target":6,
      "excitatory":True,
-     "weight":5.0e-03
+     "weight":10.0e-03
     },
     {"source":5,
      "target":6,
      "excitatory":True,
-     "weight":5.0e-03
+     "weight":10.0e-03
     },
     {"source":6,
      "target":7,
      "excitatory":True,
-     "weight":5.0e-03
+     "weight":14.0e-03
     },
     {"source":6,
      "target":11,
      "excitatory":True,
-     "weight":5.0e-03
+     "weight":14.0e-03
     },
     {"source":7,
      "target":5,
@@ -115,7 +115,7 @@ connection_mappings = [
     {"source":9,
      "target":10,
      "excitatory":True,
-     "weight":5.0e-03
+     "weight":14.0e-03
     },
     {"source":10,
      "target":12,
@@ -125,7 +125,7 @@ connection_mappings = [
     {"source":11,
      "target":12,
      "excitatory":True,
-     "weight":5.0e-03
+     "weight":14.0e-03
     }
 ]
 
@@ -180,7 +180,7 @@ EUS_afferent.add_edges(source = EUS_afferent.nodes(),
          model_template = "Exp2Syn",
          delay = 0,
          threshold = 0,
-         syn_weight = 10e-3,
+         syn_weight = 12e-3,
          target_sections=["soma"],
          distance_range=[0.0, 999.0])
 
@@ -192,7 +192,7 @@ Blad_afferent.add_edges(source = Blad_afferent.nodes(),
          model_template = "Exp2Syn",
          delay = 0,
          threshold = 0,
-         syn_weight = 10e-3,
+         syn_weight = 12e-3,
          target_sections=["soma"],
          distance_range=[0.0, 999.0])
 
