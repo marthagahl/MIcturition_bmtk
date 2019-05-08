@@ -28,7 +28,7 @@ if __name__ == '__main__':
     #Change these for your needs
     start = 0 #ms
     duration = 1000 #ms
-    hz = 10
+    hz = 80
     output_file = 'spikes_{}.csv'.format(hz)
     input_dir = 'input'
     

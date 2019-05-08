@@ -72,26 +72,26 @@ connection_mappings = [
      "excitatory":False,
      "weight":5.0e-03
     },
-    {"source":3,
-     "target":4,
-     "excitatory":False,
-     "weight":2.0e-09
-    },
+#    {"source":3,
+#     "target":4,
+#     "excitatory":False,
+#     "weight":2.0e-09
+#    },
     {"source":3,
      "target":6,
      "excitatory":False,
      "weight":5.0e-03
     },
-    {"source":4,
-     "target":3,
-     "excitatory":False,
-     "weight":5.0e-09
-    },
-    {"source":4,
-     "target":6,
-     "excitatory":True,
-     "weight":10.0e-03
-    },
+#    {"source":4,
+#     "target":3,
+#     "excitatory":False,
+#     "weight":5.0e-09
+#    },
+#    {"source":4,
+#     "target":6,
+#     "excitatory":True,
+#     "weight":10.0e-03
+#    },
     {"source":5,
      "target":6,
      "excitatory":True,
@@ -134,10 +134,12 @@ print("\nCreating Cells")
 for i in range(num_cells):
     print("Building cell " + cell_prefix+str(i))
     template = 'hoc:PUD'
+    number = 5
     if i == 4:
         template = 'hoc:PUD2'
-    
-    net.add_nodes(N = 1, cell_name=cell_prefix+str(i), model_type='biophysical', model_template=template, morphology='blank.swc')
+    if i == 0 or i==1:
+        number = 10
+    net.add_nodes(N = number, cell_name=cell_prefix+str(i), model_type='biophysical', model_template=template, morphology='blank.swc')
 
 
 # For each of the connections create a mapping
@@ -151,6 +153,7 @@ for conn in connection_mappings:
     
     net.add_edges(source={'cell_name':cell_prefix+str(conn["source"])},
                     target={'cell_name':cell_prefix+str(conn["target"])},
+                    connection_rule=1,
                     syn_weight = conn["weight"],
                     model_template='Exp2Syn',
                     dynamics_params=dynamic,
