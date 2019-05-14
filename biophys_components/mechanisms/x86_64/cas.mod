@@ -1,1 +1,1 @@
-../modfiles//cas.mod
+../cas.mod

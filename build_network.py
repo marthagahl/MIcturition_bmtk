@@ -3,213 +3,351 @@ import numpy as np
 from bmtk.builder.networks import NetworkBuilder
 from bmtk.builder.auxi.node_params import positions_columinar, xiter_random
 
-# Build the networks
-net = NetworkBuilder('hco_net')
-Blad_afferent = NetworkBuilder('Blad_aff') # Virtual cells delivering input to Bladder
-EUS_afferent = NetworkBuilder('EUS_aff') # Virtual cells delivering input to EUS
 
-
-num_cells = 13
-cell_prefix = "PUD_"
 output_dir='network'
 
-# IDs
-# 0 - Bladder afferent
-# 1 - EUS afferent
-# 2 - PAG/PMC
-# 3 - INm+
-# 4 - INm-
-# 5 - INd
-# 6 - PGN
-# 7 - FB
-# 8 - EUS MN
-# 9 - Hypo
-# 10 - IMG
-# 11 - MPG
-connection_mappings = [
-    {"source":0,
-     "target":2,
-     "excitatory":True,
-     "weight":14.0e-03
-    },
-    {"source":0,
-     "target":5,
-     "excitatory":True,
-     "weight":14.0e-03
-    },
-    {"source":0,
-     "target":9,
-     "excitatory":True,
-     "weight":14.0e-03
-    },
-    {"source":1,
-     "target":3,
-     "excitatory":True,
-     "weight":10.0e-06
-    },
-    {"source":1,
-     "target":4,
-     "excitatory":True,
-     "weight":14.0e-03
-    },
-    {"source":1,
-     "target":5,
-     "excitatory":True,
-     "weight":14.0e-03
-    },
-    {"source":1,
-     "target":8,
-     "excitatory":True,
-     "weight":14.0e-03
-    },
-    {"source":2,
-     "target":5,
-     "excitatory":True,
-     "weight":5.0e-03
-    },
-    {"source":2,
-     "target":8,
-     "excitatory":False,
-     "weight":5.0e-03
-    },
-#    {"source":3,
-#     "target":4,
-#     "excitatory":False,
-#     "weight":2.0e-09
-#    },
-    {"source":3,
-     "target":6,
-     "excitatory":False,
-     "weight":5.0e-03
-    },
-#    {"source":4,
-#     "target":3,
-#     "excitatory":False,
-#     "weight":5.0e-09
-#    },
-#    {"source":4,
-#     "target":6,
-#     "excitatory":True,
-#     "weight":10.0e-03
-#    },
-    {"source":5,
-     "target":6,
-     "excitatory":True,
-     "weight":10.0e-03
-    },
-    {"source":6,
-     "target":7,
-     "excitatory":True,
-     "weight":14.0e-03
-    },
-    {"source":6,
-     "target":11,
-     "excitatory":True,
-     "weight":14.0e-03
-    },
-    {"source":7,
-     "target":5,
-     "excitatory":False,
-     "weight":5.0e-03
-    },
-    {"source":9,
-     "target":10,
-     "excitatory":True,
-     "weight":14.0e-03
-    },
-    {"source":10,
-     "target":12,
-     "excitatory":False,
-     "weight":5.0e-03
-    },
-    {"source":11,
-     "target":12,
-     "excitatory":True,
-     "weight":14.0e-03
-    }
-]
 
-# Create the desired number of cells, each named "PUD_n" where "n" is the cell number
+#######################################################################
+##################### Create the cells ################################
+#######################################################################
 print("\nCreating Cells")
-for i in range(num_cells):
-    print("Building cell " + cell_prefix+str(i))
-    template = 'hoc:PUD'
-    number = 5
-    if i == 4:
-        template = 'hoc:PUD2'
-    if i == 0 or i==1:
-        number = 10
-    net.add_nodes(N = number, cell_name=cell_prefix+str(i), model_type='biophysical', model_template=template, morphology='blank.swc')
+
+# Build the main network
+net = NetworkBuilder('LUT')
+
+# Specify number of cells in each population
+numBladaff = 10
+numEUSaff = 10
+numPAGaff = 10
+numIND = 10
+numHypo = 10
+numINmplus = 10
+numINmminus = 10
+numPGN = 10
+numFB = 10
+numIMG = 10
+numMPG = 10
+numEUSmn = 10
+numBladmn = 10
+
+# Create the nodes
+net.add_nodes(N=numBladaff, pop_name='Bladaff',model_type='biophysical',model_template='hoc:PUD',morphology='blank.swc')
+net.add_nodes(N=numEUSaff, pop_name='EUSaff',model_type='biophysical',model_template='hoc:PUD',morphology='blank.swc')
+net.add_nodes(N=numPAGaff, pop_name='PAGaff',model_type='biophysical',model_template='hoc:PUD',morphology='blank.swc')
+net.add_nodes(N=numIND, pop_name='IND',model_type='biophysical',model_template='hoc:PUD',morphology='blank.swc')
+net.add_nodes(N=numHypo, pop_name='Hypo',model_type='biophysical',model_template='hoc:PUD',morphology='blank.swc')
+net.add_nodes(N=numINmplus, pop_name='INmplus',model_type='biophysical',model_template='hoc:PUD',morphology='blank.swc')
+net.add_nodes(N=numINmminus, pop_name='INmminus',model_type='biophysical',model_template='hoc:PUD',morphology='blank.swc')
+net.add_nodes(N=numPGN, pop_name='PGN',model_type='biophysical',model_template='hoc:PUD',morphology='blank.swc')
+net.add_nodes(N=numFB, pop_name='FB',model_type='biophysical',model_template='hoc:PUD',morphology='blank.swc')
+net.add_nodes(N=numIMG, pop_name='IMG',model_type='biophysical',model_template='hoc:PUD',morphology='blank.swc')
+net.add_nodes(N=numMPG, pop_name='MPG',model_type='biophysical',model_template='hoc:PUD',morphology='blank.swc')
+net.add_nodes(N=numEUSmn, pop_name='EUSmn',model_type='biophysical',model_template='hoc:PUD',morphology='blank.swc')
+net.add_nodes(N=numBladmn, pop_name='Bladmn',model_type='biophysical',model_template='hoc:PUD',morphology='blank.swc')
 
 
-# For each of the connections create a mapping
+##################################################################################
+####################### Connect the cells ########################################
+##################################################################################
 print("\nConnecting Cells")
-for conn in connection_mappings:
-    dynamic = 'GABA_InhToExc.json' # See files in biophys_components/synaptic_models
-    if conn["excitatory"]:
-        dynamic = 'AMPA_ExcToExc.json'
-    
-    print("Connecting cell " + cell_prefix+str(conn["source"]) + " to " + cell_prefix+str(conn["target"]) + " via " + dynamic)
-    
-    net.add_edges(source={'cell_name':cell_prefix+str(conn["source"])},
-                    target={'cell_name':cell_prefix+str(conn["target"])},
-                    connection_rule=1,
-                    syn_weight = conn["weight"],
-                    model_template='Exp2Syn',
-                    dynamics_params=dynamic,
-                    delay=0.0,
-                    threshold = 0,
-                    target_sections=["soma"],
-                    distance_range=[0.0, 999.0])
 
+# Connectivity function
+# To use this function, the number of cells in the source population must be the same
+# as the number of cells in the target population.
+def one_to_one(source, target):
+    sid = source.node_id
+    tid = target.node_id
+    source_name = source['pop_name']
+    target_name = target['pop_name']
+    if source_name=='EUSaff':
+        sid = sid-(numBladaff)
+    if source_name=='PAGaff':
+        sid = sid-(numBladaff+numEUSaff)
+    if source_name=='IND':
+        sid = sid-(numBladaff+numEUSaff+numPAGaff)
+    if source_name=='Hypo':
+        sid = sid-(numBladaff+numEUSaff+numPAGaff+numIND)
+    if source_name=='INmplus':
+        sid = sid-(numBladaff+numEUSaff+numPAGaff+numIND+numHypo)
+    if source_name=='INmminus':
+        sid = sid-(numBladaff+numEUSaff+numPAGaff+numIND+numHypo+numINmplus)
+    if source_name=='PGN':
+        sid = sid-(numBladaff+numEUSaff+numPAGaff+numIND+numHypo+numINmplus+numINmminus)
+    if source_name=='FB':
+        sid = sid-(numBladaff+numEUSaff+numPAGaff+numIND+numHypo+numINmplus+numINmminus+numPGN)
+    if source_name=='IMG':
+        sid = sid-(numBladaff+numEUSaff+numPAGaff+numIND+numHypo+numINmplus+numINmminus+numPGN+numFB)
+    if source_name=='MPG':
+        sid = sid-(numBladaff+numEUSaff+numPAGaff+numIND+numHypo+numINmplus+numINmminus+numPGN+numFB+numIMG)
+    if source_name=='EUSmn':
+        sid = sid-(numBladaff+numEUSaff+numPAGaff+numIND+numHypo+numINmplus+numINmminus+numPGN+numFB+numIMG+numMPG)
+    if source_name=='Bladmn':
+        sid = sid-(numBladaff+numEUSaff+numPAGaff+numIND+numHypo+numINmplus+numINmminus+numPGN+numFB+numIMG+numMPG+numEUSmn)
+    
+    if target_name=='EUSaff':
+        tid = tid-(numBladaff)
+    if target_name=='PAGaff':
+        tid = tid-(numBladaff+numEUSaff)
+    if target_name=='IND':
+        tid = tid-(numBladaff+numEUSaff+numPAGaff)
+    if target_name=='Hypo':
+        tid = tid-(numBladaff+numEUSaff+numPAGaff+numIND)
+    if target_name=='INmplus':
+        tid = tid-(numBladaff+numEUSaff+numPAGaff+numIND+numHypo)
+    if target_name=='INmminus':
+        tid = tid-(numBladaff+numEUSaff+numPAGaff+numIND+numHypo+numINmplus)
+    if target_name=='PGN':
+        tid = tid-(numBladaff+numEUSaff+numPAGaff+numIND+numHypo+numINmplus+numINmminus)
+    if target_name=='FB':
+        tid = tid-(numBladaff+numEUSaff+numPAGaff+numIND+numHypo+numINmplus+numINmminus+numPGN)
+    if target_name=='IMG':
+        tid = tid-(numBladaff+numEUSaff+numPAGaff+numIND+numHypo+numINmplus+numINmminus+numPGN+numFB)
+    if target_name=='MPG':
+        tid = tid-(numBladaff+numEUSaff+numPAGaff+numIND+numHypo+numINmplus+numINmminus+numPGN+numFB+numIMG)
+    if target_name=='EUSmn':
+        tid = tid-(numBladaff+numEUSaff+numPAGaff+numIND+numHypo+numINmplus+numINmminus+numPGN+numFB+numIMG+numMPG)
+    if target_name=='Bladmn':
+        tid = tid-(numBladaff+numEUSaff+numPAGaff+numIND+numHypo+numINmplus+numINmminus+numPGN+numFB+numIMG+numMPG+numEUSmn)
+    
+    if sid == tid:
+	print("connecting {} cell {} to {} cell {}".format(source_name,sid,target_name,tid))
+        tmp_nsyn = 1
+    else:
+        return None
 
-def target_ind_equals_source_ind(source, targets, offset=0, min_syn=1, max_syn=1):
-    #creates a 1 to 1 mapping between source and destination nodes
-    total_targets=len(targets)
-    syns=np.zeros(total_targets)
-    target_index=source['node_id']
-    syns[target_index-offset]=1
-    return syns
+    return tmp_nsyn
+
+# Add connections 
+# Blad afferent --> INd
+net.add_edges(source=net.nodes(pop_name='Bladaff'), target=net.nodes(pop_name='IND'),
+                   connection_rule=one_to_one,
+                   syn_weight=12.0e-03,
+                   target_sections=['somatic'],
+                   delay=2.0,
+                   distance_range=[0.0, 300.0],
+                   dynamics_params='AMPA_ExcToExc.json',
+                   model_template='Exp2Syn')
+
+# EUS afferent --> INd
+net.add_edges(source=net.nodes(pop_name='EUSaff'), target=net.nodes(pop_name='IND'),
+                   connection_rule=one_to_one,
+                   syn_weight=12.0e-03,
+                   target_sections=['somatic'],
+                   delay=2.0,
+                   distance_range=[0.0, 300.0],
+                   dynamics_params='AMPA_ExcToExc.json',
+                   model_template='Exp2Syn')
+
+# PAG afferent --> INd
+net.add_edges(source=net.nodes(pop_name='PAGaff'), target=net.nodes(pop_name='IND'),
+                   connection_rule=one_to_one,
+                   syn_weight=12.0e-03,
+                   target_sections=['somatic'],
+                   delay=2.0,
+                   distance_range=[0.0, 300.0],
+                   dynamics_params='AMPA_ExcToExc.json',
+                   model_template='Exp2Syn')
+
+# Blad afferent --> PAG afferent
+net.add_edges(source=net.nodes(pop_name='Bladaff'), target=net.nodes(pop_name='PAGaff'),
+                   connection_rule=one_to_one,
+                   syn_weight=12.0e-03,
+                   target_sections=['somatic'],
+                   delay=2.0,
+                   distance_range=[0.0, 300.0],
+                   dynamics_params='AMPA_ExcToExc.json',
+                   model_template='Exp2Syn')
+
+# Blad afferent --> Hypogastric
+net.add_edges(source=net.nodes(pop_name='Bladaff'), target=net.nodes(pop_name='Hypo'),
+                   connection_rule=one_to_one,
+                   syn_weight=12.0e-03,
+                   target_sections=['somatic'],
+                   delay=2.0,
+                   distance_range=[0.0, 300.0],
+                   dynamics_params='AMPA_ExcToExc.json',
+                   model_template='Exp2Syn')
+
+# Hypogastric --> IMG
+net.add_edges(source=net.nodes(pop_name='Hypo'), target=net.nodes(pop_name='IMG'),
+                   connection_rule=one_to_one,
+                   syn_weight=12.0e-03,
+                   target_sections=['somatic'],
+                   delay=2.0,
+                   distance_range=[0.0, 300.0],
+                   dynamics_params='AMPA_ExcToExc.json',
+                   model_template='Exp2Syn')
+
+# EUS afferent --> INm+
+net.add_edges(source=net.nodes(pop_name='EUSaff'), target=net.nodes(pop_name='INmplus'),
+                   connection_rule=one_to_one,
+                   syn_weight=12.0e-09,
+                   target_sections=['somatic'],
+                   delay=2.0,
+                   distance_range=[0.0, 300.0],
+                   dynamics_params='AMPA_ExcToExc.json',
+                   model_template='Exp2Syn')
+
+# EUS afferent --> INm-
+net.add_edges(source=net.nodes(pop_name='EUSaff'), target=net.nodes(pop_name='INmminus'),
+                   connection_rule=one_to_one,
+                   syn_weight=12.0e-03,
+                   target_sections=['somatic'],
+                   delay=2.0,
+                   distance_range=[0.0, 300.0],
+                   dynamics_params='AMPA_ExcToExc.json',
+                   model_template='Exp2Syn')
+
+# INm+ --> PGN
+net.add_edges(source=net.nodes(pop_name='INmplus'), target=net.nodes(pop_name='PGN'),
+                   connection_rule=one_to_one,
+                   syn_weight=12.0e-03,
+                   target_sections=['somatic'],
+                   delay=2.0,
+                   distance_range=[0.0, 300.0],
+                   dynamics_params='GABA_InhToInh.json',
+                   model_template='Exp2Syn')
+
+# INm- --> PGN
+net.add_edges(source=net.nodes(pop_name='INmminus'), target=net.nodes(pop_name='PGN'),
+                   connection_rule=one_to_one,
+                   syn_weight=12.0e-03,
+                   target_sections=['somatic'],
+                   delay=2.0,
+                   distance_range=[0.0, 300.0],
+                   dynamics_params='AMPA_ExcToExc.json',
+                   model_template='Exp2Syn')
+
+# PGN --> MPG
+net.add_edges(source=net.nodes(pop_name='PGN'), target=net.nodes(pop_name='MPG'),
+                   connection_rule=one_to_one,
+                   syn_weight=12.0e-03,
+                   target_sections=['somatic'],
+                   delay=2.0,
+                   distance_range=[0.0, 300.0],
+                   dynamics_params='AMPA_ExcToExc.json',
+                   model_template='Exp2Syn')
+
+# PGN --> FB
+net.add_edges(source=net.nodes(pop_name='PGN'), target=net.nodes(pop_name='FB'),
+                   connection_rule=one_to_one,
+                   syn_weight=12.0e-03,
+                   target_sections=['somatic'],
+                   delay=2.0,
+                   distance_range=[0.0, 300.0],
+                   dynamics_params='AMPA_ExcToExc.json',
+                   model_template='Exp2Syn')
+
+# FB --> INd
+net.add_edges(source=net.nodes(pop_name='FB'), target=net.nodes(pop_name='IND'),
+                   connection_rule=one_to_one,
+                   syn_weight=12.0e-03,
+                   target_sections=['somatic'],
+                   delay=2.0,
+                   distance_range=[0.0, 300.0],
+                   dynamics_params='GABA_InhToInh.json',
+                   model_template='Exp2Syn')
+
+# MPG --> Bladder MN
+net.add_edges(source=net.nodes(pop_name='MPG'), target=net.nodes(pop_name='Bladmn'),
+                   connection_rule=one_to_one,
+                   syn_weight=12.0e-03,
+                   target_sections=['somatic'],
+                   delay=2.0,
+                   distance_range=[0.0, 300.0],
+                   dynamics_params='AMPA_ExcToExc.json',
+                   model_template='Exp2Syn')
+
+# IMG --> Bladder MN
+net.add_edges(source=net.nodes(pop_name='IMG'), target=net.nodes(pop_name='Bladmn'),
+                   connection_rule=one_to_one,
+                   syn_weight=12.0e-03,
+                   target_sections=['somatic'],
+                   delay=2.0,
+                   distance_range=[0.0, 300.0],
+                   dynamics_params='GABA_InhToInh.json',
+                   model_template='Exp2Syn')
+
+# PAG aff --> EUS MN
+net.add_edges(source=net.nodes(pop_name='PAGaff'), target=net.nodes(pop_name='EUSmn'),
+                   connection_rule=one_to_one,
+                   syn_weight=12.0e-03,
+                   target_sections=['somatic'],
+                   delay=2.0,
+                   distance_range=[0.0, 300.0],
+                   dynamics_params='GABA_InhToInh.json',
+                   model_template='Exp2Syn')
+
+# EUS afferent --> EUS MN
+net.add_edges(source=net.nodes(pop_name='EUSaff'), target=net.nodes(pop_name='EUSmn'),
+                   connection_rule=one_to_one,
+                   syn_weight=12.0e-03,
+                   target_sections=['somatic'],
+                   delay=2.0,
+                   distance_range=[0.0, 300.0],
+                   dynamics_params='AMPA_ExcToExc.json',
+                   model_template='Exp2Syn')
+
 
 # Connect virtual cells to EUS and Bladder
+Blad_aff_virt = NetworkBuilder('Blad_aff_virt') # Virtual cells delivering input to Bladder
+EUS_aff_virt = NetworkBuilder('EUS_aff_virt') # Virtual cells delivering input to EUS
 
-Blad_afferent.add_nodes(N=1, model_type='virtual', potential='exc')
-EUS_afferent.add_nodes(N=1, model_type='virtual', potential='exc')
-
-EUS_afferent.add_edges(source = EUS_afferent.nodes(),
-         target = net.nodes(cell_name='PUD_1'),
-         connection_params = {},
-         dynamics_params = "AMPA_ExcToExc.json",
-         model_template = "Exp2Syn",
-         delay = 0,
-         threshold = 0,
-         syn_weight = 12e-3,
-         target_sections=["soma"],
-         distance_range=[0.0, 999.0])
+Blad_aff_virt.add_nodes(N=10, pop_name = 'Blad_aff_virt', model_type='virtual', potential='exc')
+EUS_aff_virt.add_nodes(N=10, pop_name = 'EUS_aff_virt', model_type='virtual', potential='exc')
 
 
-Blad_afferent.add_edges(source = Blad_afferent.nodes(),
-         target = net.nodes(cell_name='PUD_0'),
-         connection_params = {},
-         dynamics_params = "AMPA_ExcToExc.json",
-         model_template = "Exp2Syn",
-         delay = 0,
-         threshold = 0,
-         syn_weight = 12e-3,
-         target_sections=["soma"],
-         distance_range=[0.0, 999.0])
+Blad_aff_virt.add_edges(source=Blad_aff_virt.nodes(), target=net.nodes(pop_name='Bladaff'),
+                   connection_rule=one_to_one,
+                   syn_weight=12.0e-03,
+                   target_sections=['somatic'],
+                   delay=2.0,
+                   distance_range=[0.0, 300.0],
+                   dynamics_params='AMPA_ExcToExc.json',
+                   model_template='Exp2Syn')
+    
+
+EUS_aff_virt.add_edges(source=EUS_aff_virt.nodes(), target=net.nodes(pop_name='EUSaff'),
+                   connection_rule=one_to_one,
+                   syn_weight=12.0e-03,
+                   target_sections=['somatic'],
+                   delay=2.0,
+                   distance_range=[0.0, 300.0],
+                   dynamics_params='AMPA_ExcToExc.json',
+                   model_template='Exp2Syn')
+
+###################################################################################
+#################### Create input spike trains ####################################
+###################################################################################
+
+from bmtk.utils.spike_trains import SpikesGenerator
+
+sg = SpikesGenerator(nodes='network/EUS_aff_virt_nodes.h5', t_max=10.0)
+sg.set_rate(20.0)
+sg.save_csv('EUS_spikes.csv', in_ms=True)
+
+
+sg = SpikesGenerator(nodes='network/Blad_aff_virt_nodes.h5', t_max=10.0)
+sg.set_rate(5.0)
+sg.save_csv('Blad_spikes.csv', in_ms=True)
+
+####################################################################################
+########################## Build and save network ##################################
+####################################################################################
 
 print("\nBuilding network and saving to directory \"" + output_dir + "\"")
 net.build()
-Blad_afferent.build()
-EUS_afferent.build()
+Blad_aff_virt.build()
+EUS_aff_virt.build()
 
 net.save_nodes(output_dir=output_dir)
 net.save_edges(output_dir=output_dir)
 
-Blad_afferent.save_nodes(output_dir=output_dir)
-Blad_afferent.save_edges(output_dir=output_dir)
+Blad_aff_virt.save_nodes(output_dir=output_dir)
+Blad_aff_virt.save_edges(output_dir=output_dir)
 
-EUS_afferent.save_nodes(output_dir=output_dir)
-EUS_afferent.save_edges(output_dir=output_dir)
+EUS_aff_virt.save_nodes(output_dir=output_dir)
+EUS_aff_virt.save_edges(output_dir=output_dir)
 print("Done")
+
+

@@ -1,1 +1,1 @@
-../modfiles//kdrca1.mod
+../kdrca1.mod

@@ -1,1 +1,1 @@
-../modfiles//na3.mod
+../na3.mod

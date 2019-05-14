@@ -9,7 +9,8 @@ def generate_input(filename,input_dir,hz,start,duration,cells,noise):
     stims = {}
     
     for cell in cells:
-        intvl = np.random.poisson(step,size=1000)
+        phase = np.random.uniform(0,step,size=1)
+        intvl = np.random.poisson(step,size=duration) + phase
         spike_time = start
         for i in np.arange(start,start+duration,step):
             spike_time = spike_time + intvl[i]
@@ -28,11 +29,11 @@ if __name__ == '__main__':
     #Change these for your needs
     start = 0 #ms
     duration = 1000 #ms
-    hz = 80
+    hz = 20
     output_file = 'spikes_{}.csv'.format(hz)
     input_dir = 'input'
     
-    cells = [0]
+    cells = np.arange(5,10)
     noise = 1
     
     generate_input(output_file,input_dir, hz, start, duration, cells, noise)

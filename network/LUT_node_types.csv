@@ -1,0 +1,14 @@
+node_type_id model_type morphology model_template pop_name
+100 biophysical blank.swc hoc:PUD Bladaff
+101 biophysical blank.swc hoc:PUD EUSaff
+102 biophysical blank.swc hoc:PUD PAGaff
+103 biophysical blank.swc hoc:PUD IND
+104 biophysical blank.swc hoc:PUD Hypo
+105 biophysical blank.swc hoc:PUD INmplus
+106 biophysical blank.swc hoc:PUD INmminus
+107 biophysical blank.swc hoc:PUD PGN
+108 biophysical blank.swc hoc:PUD FB
+109 biophysical blank.swc hoc:PUD IMG
+110 biophysical blank.swc hoc:PUD MPG
+111 biophysical blank.swc hoc:PUD EUSmn
+112 biophysical blank.swc hoc:PUD Bladmn

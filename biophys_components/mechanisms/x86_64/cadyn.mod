@@ -1,1 +1,1 @@
-../modfiles//cadyn.mod
+../cadyn.mod

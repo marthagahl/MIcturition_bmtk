@@ -1,1 +1,1 @@
-../modfiles//ka.mod
+../ka.mod
