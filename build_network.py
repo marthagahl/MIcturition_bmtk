@@ -110,7 +110,7 @@ def one_to_one(source, target):
         tid = tid-(numBladaff+numEUSaff+numPAGaff+numIND+numHypo+numINmplus+numINmminus+numPGN+numFB+numIMG+numMPG+numEUSmn)
     
     if sid == tid:
-	print("connecting {} cell {} to {} cell {}".format(source_name,sid,target_name,tid))
+        print("connecting {} cell {} to {} cell {}".format(source_name,sid,target_name,tid))
         tmp_nsyn = 1
     else:
         return None
@@ -140,6 +140,16 @@ net.add_edges(source=net.nodes(pop_name='EUSaff'), target=net.nodes(pop_name='IN
 
 # PAG afferent --> INd
 net.add_edges(source=net.nodes(pop_name='PAGaff'), target=net.nodes(pop_name='IND'),
+                   connection_rule=one_to_one,
+                   syn_weight=12.0e-03,
+                   target_sections=['somatic'],
+                   delay=2.0,
+                   distance_range=[0.0, 300.0],
+                   dynamics_params='AMPA_ExcToExc.json',
+                   model_template='Exp2Syn')
+
+# INd --> PGN
+net.add_edges(source=net.nodes(pop_name='IND'), target=net.nodes(pop_name='PGN'),
                    connection_rule=one_to_one,
                    syn_weight=12.0e-03,
                    target_sections=['somatic'],
@@ -191,7 +201,7 @@ net.add_edges(source=net.nodes(pop_name='EUSaff'), target=net.nodes(pop_name='IN
 # EUS afferent --> INm-
 net.add_edges(source=net.nodes(pop_name='EUSaff'), target=net.nodes(pop_name='INmminus'),
                    connection_rule=one_to_one,
-                   syn_weight=12.0e-03,
+                   syn_weight=16.0e-09,
                    target_sections=['somatic'],
                    delay=2.0,
                    distance_range=[0.0, 300.0],
@@ -205,7 +215,7 @@ net.add_edges(source=net.nodes(pop_name='INmplus'), target=net.nodes(pop_name='P
                    target_sections=['somatic'],
                    delay=2.0,
                    distance_range=[0.0, 300.0],
-                   dynamics_params='GABA_InhToInh.json',
+                   dynamics_params='AMPA_ExcToExc.json',
                    model_template='Exp2Syn')
 
 # INm- --> PGN
@@ -215,7 +225,7 @@ net.add_edges(source=net.nodes(pop_name='INmminus'), target=net.nodes(pop_name='
                    target_sections=['somatic'],
                    delay=2.0,
                    distance_range=[0.0, 300.0],
-                   dynamics_params='AMPA_ExcToExc.json',
+                   dynamics_params='GABA_InhToExc.json',
                    model_template='Exp2Syn')
 
 # PGN --> MPG
@@ -271,7 +281,7 @@ net.add_edges(source=net.nodes(pop_name='IMG'), target=net.nodes(pop_name='Bladm
 # PAG aff --> EUS MN
 net.add_edges(source=net.nodes(pop_name='PAGaff'), target=net.nodes(pop_name='EUSmn'),
                    connection_rule=one_to_one,
-                   syn_weight=12.0e-03,
+                   syn_weight=12.0e-09,
                    target_sections=['somatic'],
                    delay=2.0,
                    distance_range=[0.0, 300.0],
@@ -323,7 +333,7 @@ EUS_aff_virt.add_edges(source=EUS_aff_virt.nodes(), target=net.nodes(pop_name='E
 from bmtk.utils.spike_trains import SpikesGenerator
 
 sg = SpikesGenerator(nodes='network/EUS_aff_virt_nodes.h5', t_max=10.0)
-sg.set_rate(20.0)
+sg.set_rate(30.0)
 sg.save_csv('EUS_spikes.csv', in_ms=True)
 
 

@@ -1,4 +1,4 @@
-/* Created by Language version: 7.5.0 */
+/* Created by Language version: 6.2.0 */
 /* VECTORIZED */
 #define NRN_VECTORIZED 1
 #include <stdio.h>
@@ -113,7 +113,7 @@ static void nrn_state(_NrnThread*, _Memb_list*, int);
 static void  nrn_jacob(_NrnThread*, _Memb_list*, int);
  /* connect range variables in _p that hoc is supposed to know about */
  static const char *_mechanism[] = {
- "7.5.0",
+ "6.2.0",
 "leak",
  "glbar_leak",
  "el_leak",
@@ -151,7 +151,7 @@ extern void _cvode_abstol( Symbol**, double*, int);
      _nrn_setdata_reg(_mechtype, _setdata);
   hoc_register_prop_size(_mechtype, 5, 0);
  	hoc_register_var(hoc_scdoub, hoc_vdoub, hoc_intfunc);
- 	ivoc_help("help ?1 leak /home/ben/MIcturition_bmtk/biophys_components/mechanisms/modfiles/x86_64/leak.mod\n");
+ 	ivoc_help("help ?1 leak /home/mizzou/Desktop/bmtk_model/MIcturition_bmtk/biophys_components/mechanisms/x86_64/leak.mod\n");
  hoc_register_limits(_mechtype, _hoc_parm_limits);
  hoc_register_units(_mechtype, _hoc_parm_units);
  }

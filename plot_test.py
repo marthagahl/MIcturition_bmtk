@@ -110,5 +110,13 @@ plt.plot(Bladmnspkt[:,0],Bladmnspkt[:,1],'g.',label='Bladmn')
 plt.xlabel('time (ms)')
 plt.legend()
 
+#Plot averaged frequency
+plt.figure()
+plt.hist(Bladspkt[:,0],10)
+
+plt.figure()
+plt.hist(Bladmnspkt[:,0],10)
+
+
 plt.show()
 #raster_plot(cells_file="network/inputPUD_hco_net_edges.h5", cell_models_file="network/inputPUD_hco_net_edge_types.csv", spikes_file="output/spikes.h5")

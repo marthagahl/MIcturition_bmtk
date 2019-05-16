@@ -1,4 +1,4 @@
-/* Created by Language version: 7.5.0 */
+/* Created by Language version: 6.2.0 */
 /* VECTORIZED */
 #define NRN_VECTORIZED 1
 #include <stdio.h>
@@ -173,7 +173,7 @@ static void _ode_matsol(_NrnThread*, _Memb_list*, int);
  static void _ode_matsol_instance1(_threadargsproto_);
  /* connect range variables in _p that hoc is supposed to know about */
  static const char *_mechanism[] = {
- "7.5.0",
+ "6.2.0",
 "hd",
  "ghdbar_hd",
  0,
@@ -224,7 +224,7 @@ extern void _cvode_abstol( Symbol**, double*, int);
  	hoc_register_cvode(_mechtype, _ode_count, _ode_map, _ode_spec, _ode_matsol);
  	hoc_register_tolerance(_mechtype, _hoc_state_tol, &_atollist);
  	hoc_register_var(hoc_scdoub, hoc_vdoub, hoc_intfunc);
- 	ivoc_help("help ?1 hd /home/ben/MIcturition_bmtk/biophys_components/mechanisms/modfiles/x86_64/h.mod\n");
+ 	ivoc_help("help ?1 hd /home/mizzou/Desktop/bmtk_model/MIcturition_bmtk/biophys_components/mechanisms/x86_64/h.mod\n");
  hoc_register_limits(_mechtype, _hoc_parm_limits);
  hoc_register_units(_mechtype, _hoc_parm_units);
  }
@@ -286,7 +286,7 @@ static void _hoc_bett(void) {
  static int _ode_matsol1 (double* _p, Datum* _ppvar, Datum* _thread, _NrnThread* _nt) {
  rate ( _threadargscomma_ v ) ;
  Dl = Dl  / (1. - dt*( ( ( ( - 1.0 ) ) ) / taul )) ;
-  return 0;
+ return 0;
 }
  /*END CVODE*/
  static int states (double* _p, Datum* _ppvar, Datum* _thread, _NrnThread* _nt) { {

@@ -1,4 +1,4 @@
-/* Created by Language version: 7.5.0 */
+/* Created by Language version: 6.2.0 */
 /* VECTORIZED */
 #define NRN_VECTORIZED 1
 #include <stdio.h>
@@ -139,7 +139,7 @@ static void  nrn_jacob(_NrnThread*, _Memb_list*, int);
 }
  /* connect range variables in _p that hoc is supposed to know about */
  static const char *_mechanism[] = {
- "7.5.0",
+ "6.2.0",
 "currentclamp",
  "del",
  "dur",
@@ -195,7 +195,7 @@ extern void _cvode_abstol( Symbol**, double*, int);
   hoc_register_dparam_semantics(_mechtype, 0, "area");
   hoc_register_dparam_semantics(_mechtype, 1, "pntproc");
  	hoc_register_var(hoc_scdoub, hoc_vdoub, hoc_intfunc);
- 	ivoc_help("help ?1 currentclamp /home/ben/MIcturition_bmtk/biophys_components/mechanisms/modfiles/x86_64/currentclamp.mod\n");
+ 	ivoc_help("help ?1 currentclamp /home/mizzou/Desktop/bmtk_model/MIcturition_bmtk/biophys_components/mechanisms/x86_64/currentclamp.mod\n");
  hoc_register_limits(_mechtype, _hoc_parm_limits);
  hoc_register_units(_mechtype, _hoc_parm_units);
  }
