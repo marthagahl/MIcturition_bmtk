@@ -7,7 +7,7 @@
   "target_simulator": "NEURON", 
   "run": {
     "nsteps_block": 5000, 
-    "tstop": 3000.0, 
+    "tstop": 6000.0, 
     "dt": 0.1, 
     "dL": 9999, 
     "spike_threshold": 0.0
@@ -17,18 +17,23 @@
     "v_init": -80.0
   }, 
   "inputs": {
-	"blad_spikes":{
+	"blad_spikes_low":{
 		"input_type":"spikes",
 		"module":"csv",
 		"input_file":"Blad_spikes.csv",
 		"node_set":"Blad_aff_virt"
 	},
-
 	"EUS_spikes":{
 		"input_type":"spikes",
 		"module":"csv",
 		"input_file":"EUS_spikes.csv",
 		"node_set":"EUS_aff_virt"
+	},
+	"PAG_spikes":{
+		"input_type":"spikes",
+		"module":"csv",
+		"input_file":"PAG_spikes.csv",
+		"node_set":"PAG_aff_virt"
 	}
   },
   "output": {

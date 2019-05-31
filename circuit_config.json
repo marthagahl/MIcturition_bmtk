@@ -25,6 +25,10 @@
 	    {
 		    "nodes_file": "$NETWORK_DIR//EUS_aff_virt_nodes.h5",
 		    "node_types_file": "$NETWORK_DIR//EUS_aff_virt_node_types.csv"
+	    },
+	    {
+		    "nodes_file": "$NETWORK_DIR//PAG_aff_virt_nodes.h5",
+		    "node_types_file": "$NETWORK_DIR//PAG_aff_virt_node_types.csv"
 	    }
 
     ], 
@@ -40,6 +44,10 @@
 	    {
 		    "edges_file": "$NETWORK_DIR//EUS_aff_virt_LUT_edges.h5",
 		    "edge_types_file": "$NETWORK_DIR//EUS_aff_virt_LUT_edge_types.csv"
+	    },
+	    {
+		    "edges_file": "$NETWORK_DIR//PAG_aff_virt_LUT_edges.h5",
+		    "edge_types_file": "$NETWORK_DIR//PAG_aff_virt_LUT_edge_types.csv"
 	    }
     ]
   }

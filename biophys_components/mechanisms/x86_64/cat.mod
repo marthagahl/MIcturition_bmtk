@@ -1,1 +1,1 @@
-../modfiles//cat.mod
+../cat.mod

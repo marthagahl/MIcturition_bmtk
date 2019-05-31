@@ -1,1 +1,1 @@
-../modfiles//kaprox.mod
+../kaprox.mod

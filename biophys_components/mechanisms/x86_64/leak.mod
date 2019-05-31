@@ -1,1 +1,1 @@
-../modfiles//leak.mod
+../leak.mod

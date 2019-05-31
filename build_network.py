@@ -158,15 +158,6 @@ net.add_edges(source=net.nodes(pop_name='IND'), target=net.nodes(pop_name='PGN')
                    dynamics_params='AMPA_ExcToExc.json',
                    model_template='Exp2Syn')
 
-# Blad afferent --> PAG afferent
-net.add_edges(source=net.nodes(pop_name='Bladaff'), target=net.nodes(pop_name='PAGaff'),
-                   connection_rule=one_to_one,
-                   syn_weight=12.0e-03,
-                   target_sections=['somatic'],
-                   delay=2.0,
-                   distance_range=[0.0, 300.0],
-                   dynamics_params='AMPA_ExcToExc.json',
-                   model_template='Exp2Syn')
 
 # Blad afferent --> Hypogastric
 net.add_edges(source=net.nodes(pop_name='Bladaff'), target=net.nodes(pop_name='Hypo'),
@@ -191,7 +182,17 @@ net.add_edges(source=net.nodes(pop_name='Hypo'), target=net.nodes(pop_name='IMG'
 # EUS afferent --> INm+
 net.add_edges(source=net.nodes(pop_name='EUSaff'), target=net.nodes(pop_name='INmplus'),
                    connection_rule=one_to_one,
-                   syn_weight=12.0e-09,
+                   syn_weight=12.0e-04,
+                   target_sections=['somatic'],
+                   delay=2.0,
+                   distance_range=[0.0, 300.0],
+                   dynamics_params='AMPA_ExcToExc.json',
+                   model_template='Exp2Syn')
+
+# PAG afferent --> INm+
+net.add_edges(source=net.nodes(pop_name='PAGaff'), target=net.nodes(pop_name='INmplus'),
+                   connection_rule=one_to_one,
+                   syn_weight=12.0e-03,
                    target_sections=['somatic'],
                    delay=2.0,
                    distance_range=[0.0, 300.0],
@@ -201,7 +202,7 @@ net.add_edges(source=net.nodes(pop_name='EUSaff'), target=net.nodes(pop_name='IN
 # EUS afferent --> INm-
 net.add_edges(source=net.nodes(pop_name='EUSaff'), target=net.nodes(pop_name='INmminus'),
                    connection_rule=one_to_one,
-                   syn_weight=16.0e-09,
+                   syn_weight=16.0e-03,
                    target_sections=['somatic'],
                    delay=2.0,
                    distance_range=[0.0, 300.0],
@@ -271,7 +272,7 @@ net.add_edges(source=net.nodes(pop_name='MPG'), target=net.nodes(pop_name='Bladm
 # IMG --> Bladder MN
 net.add_edges(source=net.nodes(pop_name='IMG'), target=net.nodes(pop_name='Bladmn'),
                    connection_rule=one_to_one,
-                   syn_weight=12.0e-03,
+                   syn_weight=10.0e-03,
                    target_sections=['somatic'],
                    delay=2.0,
                    distance_range=[0.0, 300.0],
@@ -281,7 +282,7 @@ net.add_edges(source=net.nodes(pop_name='IMG'), target=net.nodes(pop_name='Bladm
 # PAG aff --> EUS MN
 net.add_edges(source=net.nodes(pop_name='PAGaff'), target=net.nodes(pop_name='EUSmn'),
                    connection_rule=one_to_one,
-                   syn_weight=12.0e-09,
+                   syn_weight=12.0e-03,
                    target_sections=['somatic'],
                    delay=2.0,
                    distance_range=[0.0, 300.0],
@@ -299,13 +300,14 @@ net.add_edges(source=net.nodes(pop_name='EUSaff'), target=net.nodes(pop_name='EU
                    model_template='Exp2Syn')
 
 
-# Connect virtual cells to EUS and Bladder
+# Connect virtual cells to EUS, Bladder, and PAG/PMC
 Blad_aff_virt = NetworkBuilder('Blad_aff_virt') # Virtual cells delivering input to Bladder
 EUS_aff_virt = NetworkBuilder('EUS_aff_virt') # Virtual cells delivering input to EUS
+PAG_aff_virt = NetworkBuilder('PAG_aff_virt') # Virtual cells delivering input to PAG/PMC
 
 Blad_aff_virt.add_nodes(N=10, pop_name = 'Blad_aff_virt', model_type='virtual', potential='exc')
 EUS_aff_virt.add_nodes(N=10, pop_name = 'EUS_aff_virt', model_type='virtual', potential='exc')
-
+PAG_aff_virt.add_nodes(N=10, pop_name = 'PAG_aff_virt', model_type='virtual', potential='exc')
 
 Blad_aff_virt.add_edges(source=Blad_aff_virt.nodes(), target=net.nodes(pop_name='Bladaff'),
                    connection_rule=one_to_one,
@@ -326,20 +328,14 @@ EUS_aff_virt.add_edges(source=EUS_aff_virt.nodes(), target=net.nodes(pop_name='E
                    dynamics_params='AMPA_ExcToExc.json',
                    model_template='Exp2Syn')
 
-###################################################################################
-#################### Create input spike trains ####################################
-###################################################################################
-
-from bmtk.utils.spike_trains import SpikesGenerator
-
-sg = SpikesGenerator(nodes='network/EUS_aff_virt_nodes.h5', t_max=10.0)
-sg.set_rate(30.0)
-sg.save_csv('EUS_spikes.csv', in_ms=True)
-
-
-sg = SpikesGenerator(nodes='network/Blad_aff_virt_nodes.h5', t_max=10.0)
-sg.set_rate(5.0)
-sg.save_csv('Blad_spikes.csv', in_ms=True)
+PAG_aff_virt.add_edges(source=PAG_aff_virt.nodes(), target=net.nodes(pop_name='PAGaff'),
+                   connection_rule=one_to_one,
+                   syn_weight=12.0e-03,
+                   target_sections=['somatic'],
+                   delay=2.0,
+                   distance_range=[0.0, 300.0],
+                   dynamics_params='AMPA_ExcToExc.json',
+                   model_template='Exp2Syn')
 
 ####################################################################################
 ########################## Build and save network ##################################
@@ -349,6 +345,7 @@ print("\nBuilding network and saving to directory \"" + output_dir + "\"")
 net.build()
 Blad_aff_virt.build()
 EUS_aff_virt.build()
+PAG_aff_virt.build()
 
 net.save_nodes(output_dir=output_dir)
 net.save_edges(output_dir=output_dir)
@@ -358,6 +355,28 @@ Blad_aff_virt.save_edges(output_dir=output_dir)
 
 EUS_aff_virt.save_nodes(output_dir=output_dir)
 EUS_aff_virt.save_edges(output_dir=output_dir)
+
+PAG_aff_virt.save_nodes(output_dir=output_dir)
+PAG_aff_virt.save_edges(output_dir=output_dir)
+
+
+###################################################################################
+#################### Create input spike trains ####################################
+###################################################################################
+
+from bmtk.utils.spike_trains import SpikesGenerator
+
+#sg = SpikesGenerator(nodes='network/EUS_aff_virt_nodes.h5', t_max=10.0)
+#sg.set_rate(30.0)
+#sg.save_csv('EUS_spikes.csv', in_ms=True)
+
+#sg = SpikesGenerator(nodes='network/Blad_aff_virt_nodes.h5', t_max=10.0)
+#sg.set_variable_rate(5.0,t_start=0,t_end=3)
+#sg.save_csv('Blad_spikes_low.csv', in_ms=True)
+
+#sg = SpikesGenerator(nodes='network/PAG_aff_virt_nodes.h5', t_max=10.0)
+#sg.set_rate(1.0)
+#sg.save_csv('PAG_spikes.csv', in_ms=True)
 print("Done")
 
 
